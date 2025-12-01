@@ -233,7 +233,7 @@ def apply_move(game, move):
 # ---------------------------------------------------------
 # TREE SEARCH (DFS)
 # ---------------------------------------------------------
-def find_best_move(game, max_depth=7):
+def find_best_move_tree(game, max_depth=7):
     start_time = time.time()
     visited = set()
     best_move = None

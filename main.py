@@ -1,4 +1,4 @@
-from game_logic.best_move_tree import find_best_move
+from game_logic.best_move_tree import find_best_move_tree
 from game_logic.best_move_graph import find_best_move_graph
 
 from random import shuffle
@@ -266,7 +266,8 @@ if __name__ == "__main__":
     selected: Optional[Dict[str, Any]] = None
     best_suggestion = None
     show_suggestion_ms = 0
-    button_message = ""
+    button_message_tree = ""
+    button_message_graph = ""
 
     running = True
     while running:
@@ -279,8 +280,11 @@ if __name__ == "__main__":
 
                 # Button click (bottom-right)
                 if layout.get("button") and layout["button"].collidepoint(pos):
-                    best_move = find_best_move(game)
-                    button_message = f"{best_move}"
+                    best_move_tree = find_best_move_tree(game)
+                    button_message_tree = f"Tree: {best_move_tree}"
+                    
+                    best_move_graph = find_best_move_graph(game)
+                    button_message_graph = f"Graph: {best_move_graph}"
                     continue
 
                 if area == "stock":
@@ -288,11 +292,13 @@ if __name__ == "__main__":
                     if drawn:
                         drawn.revealed = True
                         game.waste.add(drawn)
-                        button_message = ""
+                        button_message_tree = ""
+                        button_message_graph = ""
                     else:
                         if game.waste.size() > 0:
                             game.stock.recycle_from(game.waste)
-                            button_message = ""
+                            button_message_tree = ""
+                            button_message_graph = ""
                     selected = None
                     continue
 
@@ -300,7 +306,8 @@ if __name__ == "__main__":
                     moved = attempt_move(game, selected, (area, idx))
                     if moved:
                         selected = None
-                        button_message = ""
+                        button_message_tree = ""
+                        button_message_graph = ""
                         continue
                     if selected.get("type") == area and selected.get("index", -1) == idx and selected.get("card_index", -1) == card_idx:
                         selected = None
@@ -325,8 +332,10 @@ if __name__ == "__main__":
         if layout.get("button"):
             draw_button(screen, layout["button"], "Show Hint", font_small, bool(button_hover))
 
-        if button_message:
-            draw_text(screen, button_message, (MARGIN, WINDOW_H - MARGIN - 20 - 22), font_small, (255, 255, 255))
+        if button_message_graph:
+            draw_text(screen, button_message_graph, (MARGIN, WINDOW_H - MARGIN - 20 - 22), font_small, (255, 255, 255))
+        if button_message_tree:
+            draw_text(screen, button_message_tree, (MARGIN, WINDOW_H - MARGIN - 40 - 22), font_small, (255, 255, 255))
 
         pygame.display.flip()
         clock.tick(60)

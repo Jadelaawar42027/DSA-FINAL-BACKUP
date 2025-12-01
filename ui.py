@@ -9,7 +9,6 @@ from data_structures.board import BoardPile
 from data_structures.stock import StockPile
 from data_structures.waste import WastePile
 from data_structures.cards import Card
-from game_logic.best_move_tree import find_best_move
 
 
 # Window and layout constants
