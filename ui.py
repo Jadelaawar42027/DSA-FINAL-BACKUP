@@ -190,7 +190,3 @@ def _Board_card_index_at_pos(pile: BoardPile, base: Rect, pos: Tuple[int, int]) 
     return -1
 
 
-
-
-
-

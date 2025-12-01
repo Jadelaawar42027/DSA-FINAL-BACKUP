@@ -1,8 +1,11 @@
 from data_structures.cards import Card
 
+
+# The BoardPile class is used to define the pile of cards that is played on the board
+# It can be used by the player to add and
 class BoardPile:
     def __init__(self):
-        self.cards = []  # can have face-down and face-up cards
+        self.cards = []  
     
     def can_add(self, card: Card) -> bool:
         # if empty, can only add King (rank 13)
