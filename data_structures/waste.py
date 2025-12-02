@@ -1,5 +1,12 @@
 from data_structures.cards import Card
 
+
+# The WastePile class is used to store the cards that are extracted 
+# from the stock pile but are not played.
+# The player can draw the top card that is revealed.
+# Otherwise they have to go through the whole stock deck 
+# before it gets flipped back to the stock
+
 class WastePile:
     def __init__(self):
         self.cards = []  # stack (list)

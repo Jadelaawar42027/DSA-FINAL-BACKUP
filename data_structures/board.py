@@ -2,7 +2,10 @@ from data_structures.cards import Card
 
 
 # The BoardPile class is used to define the pile of cards that is played on the board
-# It can be used by the player to add and
+# It can be used by the player to store cards in a proper order.
+# cards can be added to it as long as they follow the correct rank
+# if the top card is not revealed it will be flipped
+
 class BoardPile:
     def __init__(self):
         self.cards = []  

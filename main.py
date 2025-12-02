@@ -1,4 +1,3 @@
-
 # These imports handle the prediction engines that power the hint functionality
 from game_logic.best_move_tree import find_best_move_tree
 from game_logic.best_move_graph import find_best_move_graph
@@ -27,6 +26,8 @@ from ui import *
 class SolitaireGame:
 
     # This defines the piles in the board and deals cards to them
+    # runtime complexity: worst case O(n log n), average case O(n log n)
+    # where n is the total number of cards (52), due to deck creation and shuffling
     def __init__(self):
         self.stock = StockPile()
         self.waste = WastePile()
@@ -46,6 +47,8 @@ class SolitaireGame:
 
     # This function creates a list of cards that will be later dealt across 
     # the board.
+    # runtime complexity: worst case O(n log n), average case O(n log n)
+    # where n is the total number of cards (52), due to shuffling operation
     def create_deck(self) -> list[Card]:
         deck = []
         for suit in SUITS:
@@ -58,6 +61,8 @@ class SolitaireGame:
     # This creates the deck from the previous function and deals the cards to all the piles on the board
     # it deals n cards to each board pile where n is the a number increasing from 1 to 8
     # It flips the top card over
+    # runtime complexity: worst case O(n), average case O(n)
+    # where n is the total number of cards (52)
     def deal_cards(self):
         deck = self.create_deck()
         deck_index = 0
@@ -77,6 +82,8 @@ class SolitaireGame:
 
 
 # This function determines what part of the board the user clicked on
+# runtime complexity: worst case O(c), average case O(c)
+# where c is the number of board columns (typically 7) plus foundations (4)
 def hit_test(layout: dict, pos, Board: list):
     x, y = pos
     if layout["stock"].collidepoint(x, y):
@@ -97,6 +104,8 @@ def hit_test(layout: dict, pos, Board: list):
 
 
 # This function ensures that the continuation of cards that is found in a pile is valid
+# runtime complexity: worst case O(k), average case O(k)
+# where k is the number of cards in the sequence from start_idx to the end of the pile
 def _is_valid_Board_sequence(pile: BoardPile, start_idx: int) -> bool:
     if start_idx < 0 or start_idx >= len(pile.cards):
         return False
@@ -114,6 +123,9 @@ def _is_valid_Board_sequence(pile: BoardPile, start_idx: int) -> bool:
 
 
 # This function tries to run a user move from the selected source to the target
+# runtime complexity: worst case O(k), average case O(1)
+# where k is the number of cards being moved in a board-to-board sequence move
+# most moves (waste, foundation) are O(1), but moving card sequences is O(k)
 def attempt_move(game: SolitaireGame, selected: Dict[str, Any], target: Tuple[str, int]) -> bool:
     src_type = selected["type"]
     src_idx = selected.get("index", -1)

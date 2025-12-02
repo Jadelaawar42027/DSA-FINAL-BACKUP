@@ -1,9 +1,14 @@
 from data_structures.cards import Card
 from data_structures.waste import WastePile
 
+# The stock pile holds all of the cards that have not been played on the 
+# board.
+# a player can draw one card at a time and place it on the waste pile. 
+# This card can be played until another card is drawn from the stock.
+
 class StockPile:
     def __init__(self):
-        self.cards = []  # stack (list)
+        self.cards = []
     
     def draw(self) -> Card:
         # remove and return top card
